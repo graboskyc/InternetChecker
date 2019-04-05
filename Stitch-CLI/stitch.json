@@ -1,0 +1,11 @@
+{
+    "app_id": "plex-wltfx",
+    "config_version": 20180301,
+    "name": "plex",
+    "location": "US-VA",
+    "deployment_model": "LOCAL",
+    "security": {},
+    "hosting": {
+        "enabled": false
+    }
+}

@@ -1,15 +1,16 @@
 #!/bin/bash
-  
+
 while [ 1 ] 
 do
         #1 packets transmitted, 1 received, 0% packet loss, time 0ms
-        pr=`ping google.com -c 1 | tail -n2 | head -n 1`
+        p=`ping google.com -c 1`
+        pr=`echo "$p" | tail -n2 | head -n 1`
         d=`date +'%Y-%m-%dT%R:%S.%N'`
         hasFailed=0
 
         if [[ ${#pr} -lt 5 ]]
         then
-                json="{'trans':1, 'recv':0, 'dnsfail':true, 'clidate':'$d', 'isdown':true}"
+                json="{'trans':1, 'recv':0, 'dnsfail':true, 'clidate':'$d', 'isdown':true, 'pingresult':'$p'}"
                 hasFailed=1
         else
                 trans=`echo $pr | cut -d" " -f1`
@@ -22,7 +23,7 @@ do
                         isdown='true'
                         hasFailed=1
                 fi
-                json="{'trans':$trans, 'recv':$recv, 'latency':$t, 'clidate':'$d', 'isdown':$isdown, 'dnsfail':false}"
+                json="{'trans':$trans, 'recv':$recv, 'latency':$t, 'clidate':'$d', 'isdown':$isdown, 'dnsfail':false, 'pingresult':'$p'}"
         fi
 
         json=`echo $json | sed "s/'/\"/g"`
